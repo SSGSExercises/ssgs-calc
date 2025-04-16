@@ -14,24 +14,20 @@ function getUserInput(question) {
   });
 }
 
-function div(result, num1, num2) {
-  result = num1 / num2;
-  return result;
+function div(num1, num2) {
+  return num1 / num2;
 }
 
-function mul(result, num1, num2) {
-  result = num1 * num2;
-  return result;
+function mul(num1, num2) {
+  return num1 * num2;
 }
 
-function sub(result, num1, num2) {
-  result = num1 - num2;
-  return result;
+function sub(num1, num2) {
+  return num1 - num2;
 }
 
-function sum(result, num1, num2) {
-  result = num1 + num2;
-  return result;
+function sum(num1, num2) {
+  return num1 + num2;
 }
 
 async function main() {
@@ -62,13 +58,13 @@ async function main() {
   // perform the operation and display the result:
   let result;
   if (operation === "sum") {
-    result = sum(result, num1, num2);
+    result = sum(num1, num2);
   } else if (operation === "sub") {
-    result = sub(result, num1, num2);
+    result = sub(num1, num2);
   } else if (operation === "mul") {
-    result = mul(result, num1, num2);
+    result = mul(num1, num2);
   } else if (operation === "div") {
-    result = div(result, num1, num2);
+    result = div(num1, num2);
   }
   console.log(`The result of the ${operation} operation is: ${result}`);
   exit();
