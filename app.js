@@ -14,14 +14,34 @@ function getUserInput(question) {
   });
 }
 
+function div(result, num1, num2) {
+  result = num1 / num2;
+  return result;
+}
+
+function mul(result, num1, num2) {
+  result = num1 * num2;
+  return result;
+}
+
+function sub(result, num1, num2) {
+  result = num1 - num2;
+  return result;
+}
+
+function sum(result, num1, num2) {
+  result = num1 + num2;
+  return result;
+}
+
 async function main() {
   console.log("ssgs-calc started !");
 
   // ask the user to select the arithmetic operation:
-  let operation = await getUserInput("Please enter an arithmetic operation: sum, add, mul or div\n");
+  let operation = await getUserInput("Please enter an arithmetic operation: sum, sub, mul or div\n");
   while (operation !== "sum" && operation !== "sub" && operation !== "mul" && operation !== "div") {
     console.log("Invalid operation. Please retype your choice.");
-    operation = await getUserInput("Please enter an arithmetic operation: sum, add, mul, or div\n");
+    operation = await getUserInput("Please enter an arithmetic operation: sum, sub, mul, or div\n");
   }
   console.log(`You selected the ${operation} operation.`);
 
@@ -42,16 +62,17 @@ async function main() {
   // perform the operation and display the result:
   let result;
   if (operation === "sum") {
-    result = num1 + num2;
+    result = sum(result, num1, num2);
   } else if (operation === "sub") {
-    result = num1 - num2;
+    result = sub(result, num1, num2);
   } else if (operation === "mul") {
-    result = num1 * num2;
+    result = mul(result, num1, num2);
   } else if (operation === "div") {
-    result = num1 / num2;
+    result = div(result, num1, num2);
   }
   console.log(`The result of the ${operation} operation is: ${result}`);
   exit();
 }
 
 main().catch(console.error);
+
