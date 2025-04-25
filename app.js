@@ -1,152 +1,92 @@
-const { exit } = require('process');
-const readline = require('readline');
+const { Operation, calculateResult } = require("./lib.js");
+const readline = require("readline");
 
-const Operation = {
-  SUM: "sum",
-  SUB: "sub",
-  MUL: "mul",
-  DIV: "div"
-};
-
-function getUserInput(question) {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-
-  return new Promise((resolve, reject) => {
+/**
+ * Promisifies the readline.question function, allowing for asynchronous question prompting.
+ * @param {readline.Interface} rl - The readline interface object.
+ * @param {string} question - The question to ask the user.
+ * @returns {Promise<string>} A promise that resolves with the user's answer to the question.
+ */
+const askQuestion = (rl, question) => {
+  return new Promise((resolve) => {
     rl.question(question, (answer) => {
-      rl.close();
       resolve(answer);
     });
   });
-}
-
-function sum(num1, num2) {
-  return num1 + num2;
-}
-
-function sub(num1, num2) {
-  return num1 - num2;
-}
-
-function mul(num1, num2) {
-  return num1 * num2;
-}
-
-function div(num1, num2) {
-  if (num2 === 0) {
-    console.log("Error: Division by zero is not allowed.");
-    return "undefined";
-  }
-
-  return num1 / num2;
-}
+};
 
 /**
- * Prompts the user to enter an arithmetic operation and validates the input.
- * Keeps asking until a valid operation is provided.
- * 
- * @param {function} inputStream - A function that returns a Promise resolving to user input
- * @returns {Promise<string>} A Promise that resolves to the valid operation selected by the user
- * @throws {Error} If inputStream is not a function or fails to get input
+ * Asynchronously prompts the user to enter an arithmetic operation and validates the input.
+ * It keeps asking until a valid operation ("sum", "sub", "mul", or "div") is entered.
+ * @param {readline.Interface} rl - The readline interface object for interacting with the user.
+ * @returns {Promise<string>} A promise that resolves with the valid arithmetic operation entered by the user.
  */
-async function askOperation(inputStream) {
-  let operation = await inputStream("Please enter an arithmetic operation: sum, sub, mul or div: ");
+async function askOperation(rl) {
+  let operation = await askQuestion(
+    rl,
+    "Please enter an arithmetic operation: sum, sub, mul or div: "
+  );
 
   while (!Object.values(Operation).includes(operation)) {
     console.log("Invalid operation. Please retype your choice.");
-    operation = await inputStream("Please enter an arithmetic operation: sum, sub, mul, or div: ");
+    operation = await askQuestion(
+      rl,
+      "Please enter an arithmetic operation: sum, sub, mul, or div: "
+    );
   }
 
   return operation;
 }
 
 /**
- * Prompts the user for two numbers asynchronously using a provided callback function.
- * Keeps asking until valid inputs are provided.
- * 
- * @param {function} callback - Async function that handles user input prompts
- * @returns {Promise<{num1: number, num2: number}>} Object containing the two validated numbers
- * @throws {Error} If the callback fails to execute
+ * Asynchronously prompts the user to enter two numbers and validates that the inputs are valid numbers.
+ * It keeps asking for each number until a valid number is entered.
+ * @param {readline.Interface} rl - The readline interface object for interacting with the user.
+ * @returns {Promise<{num1: number, num2: number}>} A promise that resolves with an object containing the two valid numbers entered by the user.
  */
-async function askTwoNumbers(inputStream) {
-  let num1 = parseFloat(await inputStream("Please enter the first number: "));
+async function askTwoNumbers(rl) {
+  let num1 = parseFloat(
+    await askQuestion(rl, "Please enter the first number: ")
+  );
   while (isNaN(num1)) {
     console.log("Invalid input. Please retype your choice.");
-    num1 = parseFloat(await inputStream("Please enter the first number: "));
+    num1 = parseFloat(await askQuestion(rl, "Please enter the first number: "));
   }
 
-  let num2 = parseFloat(await inputStream("Please enter the second number: "));
+  let num2 = parseFloat(
+    await askQuestion(rl, "Please enter the second number: ")
+  );
   while (isNaN(num2)) {
     console.log("Invalid input. Please retype your choice.");
-    num2 = parseFloat(await inputStream("Please enter the second number: "));
+    num2 = parseFloat(
+      await askQuestion(rl, "Please enter the second number: ")
+    );
   }
 
   return { num1, num2 };
 }
 
-/**
- * Performs arithmetic operations based on the specified operation type.
- * @param {Operation} operation - The arithmetic operation to perform (SUM, SUB, MUL, DIV)
- * @param {number} num1 - The first number operand
- * @param {number} num2 - The second number operand
- * @returns {number | null} The result of the arithmetic operation, or null if the operation is invalid
- * @throws {Error} If division by zero is attempted
- */
-function calculateResult(operation, num1, num2) {
-  let result;
-
-  switch (operation) {
-    case Operation.SUM:
-      result = sum(num1, num2);
-      break;
-    case Operation.SUB:
-      result = sub(num1, num2);
-      break;
-    case Operation.MUL:
-      result = mul(num1, num2);
-      break;
-    case Operation.DIV:
-      result = div(num1, num2);
-      break;
-    default:
-      console.log("Invalid operation, terminating...");
-      return null;
-  }
-
-  return result;
-}
-
-async function main() {
+const main = async () => {
   console.log("[ssgs-calc] initialized.");
 
-  const operation = await askOperation(getUserInput);
-  const { num1, num2 } = await askTwoNumbers(getUserInput);
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  const operation = await askOperation(rl);
+  const { num1, num2 } = await askTwoNumbers(rl);
   const result = calculateResult(operation, num1, num2);
 
   if (result === null) {
-    console.log("Calculation could not be performed due to an invalid operation.");
+    console.log(
+      "Calculation could not be performed due to an invalid operation."
+    );
   } else {
     console.log(`The result of the ${operation} operation is: ${result}`);
   }
 
-  exit();
-}
-
-if (require.main === module) {
-  main().catch(console.error);
-}
-
-module.exports = {
-  Operation,
-  sum,
-  sub,
-  mul,
-  div,
-  getUserInput,
-  askOperation,
-  askTwoNumbers,
-  calculateResult,
-  main,
+  rl.close();
 };
+
+main();
