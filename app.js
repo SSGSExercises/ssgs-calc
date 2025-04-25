@@ -8,16 +8,11 @@ const Operation = {
   DIV: "div"
 };
 
-// Create readline interface in a function rather than globally
-function createReadlineInterface() {
-  return readline.createInterface({
+function getUserInput(question) {
+  const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   });
-}
-
-function getUserInput(question) {
-  const rl = createReadlineInterface();
 
   return new Promise((resolve, reject) => {
     rl.question(question, (answer) => {
