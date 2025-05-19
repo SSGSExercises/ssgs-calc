@@ -1,8 +1,15 @@
+# TEST_LAB_SSGS
+test
 # Calculator app
 
 Submission by the team *'Gang of Four + 1'* for the SSGS course.  
 
 ## From the instructions for Lab Assignment 6:
+
+### Prerequirements
+
+- Node version 18.x must be install
+
 
 ### Requirements
 
@@ -16,9 +23,31 @@ Submission by the team *'Gang of Four + 1'* for the SSGS course.
 
 - Improve the program's behavior in case of an invalid parameter (for example, display an error message and allow the user to try again instead of terminating the execution).
 
-## Testing:
+### How to install
 
-The application includes unit tests written using the [Jest](https://jestjs.io/) testing framework. These tests cover the core arithmetic functions (`sum`, `sub`, `mul`, `div`) and the main `calculateResult` function located in [`lib.js`]().
+- Clone the repositories
+````bash
+git clone https://github.com/SSGSExercises/ssgs-calc.git
+````
+- Enter in the cloned directory
+````bash
+cd ${your_installation_dir}/ssgs-calc
+````
+- Install dependecies
+````bash
+npm install
+````
+
+### How to use
+
+- Run with
+
+````bash
+npm run dev
+````
+- #### Testing:
+
+The application includes unit tests written using the [Jest](https://jestjs.io/) testing framework. These tests cover the core arithmetic functions (`sum`, `sub`, `mul`, `div`) and the main `calculateResult` function located in [`lib.js`](). The coverage of the test is included in the output, with an actual coverage of 100%.
 
 The tests verify:
 - Correct calculations for all supported operations with various inputs (positive, negative, zero, decimals).
@@ -33,7 +62,7 @@ npm test
 
 ## Github Actions:
 
-A GitHub Actions workflow is configured in [`.github/workflows/test.yml`](). This workflow automates the testing process.
+A GitHub Actions workflow is configured in [`.github/workflows/test.yml`](). This workflow automates the testing process and shows the output of the coverage. Runs only on push and on pull request to the `main` branch
 
 Key features:
 - **Trigger:** The workflow runs automatically on every `push` event to the repository.
@@ -43,5 +72,6 @@ Key features:
     2. Sets up the specified Node.js version.
     3. Installs project dependencies using `npm ci`.
     4. Executes the Jest test suite using `npm test`.
+    5. Uploads an artifact containing the code coverage report.
 
 This Continuous Integration (CI) setup ensures that all tests pass automatically whenever new code is pushed to the repository.
