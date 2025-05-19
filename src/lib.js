@@ -1,8 +1,8 @@
 const Operation = {
-  SUM: "sum",
-  SUB: "sub",
-  MUL: "mul",
-  DIV: "div",
+    SUM: "sum",
+    SUB: "sub",
+    MUL: "mul",
+    DIV: "div",
 };
 
 /**
@@ -12,7 +12,7 @@ const Operation = {
  * @returns {number} The sum of num1 and num2.
  */
 function sum(num1, num2) {
-  return num1 + num2;
+    return num1 + num2;
 }
 
 /**
@@ -22,7 +22,7 @@ function sum(num1, num2) {
  * @returns {number} The difference between num1 and num2.
  */
 function sub(num1, num2) {
-  return num1 - num2;
+    return num1 - num2;
 }
 
 /**
@@ -32,7 +32,7 @@ function sub(num1, num2) {
  * @returns {number} The product of num1 and num2.
  */
 function mul(num1, num2) {
-  return num1 * num2;
+    return num1 * num2;
 }
 
 /**
@@ -44,12 +44,12 @@ function mul(num1, num2) {
  * or undefined if division by zero is attempted.
  */
 function div(num1, num2) {
-  if (num2 === 0) {
-    console.error("Error: Division by zero is not allowed.");
-    return undefined;
-  }
+    if (num2 === 0) {
+        console.error("Error: Division by zero is not allowed.");
+        return undefined;
+    }
 
-  return num1 / num2;
+    return num1 / num2;
 }
 
 /**
@@ -64,26 +64,26 @@ function div(num1, num2) {
  * or null if an invalid operation is provided.
  */
 function calculateResult(operation, num1, num2) {
-  switch (operation) {
-    case Operation.SUM:
-      return sum(num1, num2);
-    case Operation.SUB:
-      return sub(num1, num2);
-    case Operation.MUL:
-      return mul(num1, num2);
-    case Operation.DIV:
-      return div(num1, num2);
-    default:
-      console.error("Invalid operation, terminating...");
-      return null;
-  }
+    switch (operation) {
+        case Operation.SUM:
+            return sum(num1, num2);
+        case Operation.SUB:
+            return sub(num1, num2);
+        case Operation.MUL:
+            return mul(num1, num2);
+        case Operation.DIV:
+            return div(num1, num2);
+        default:
+            console.error("Invalid operation, terminating...");
+            return null;
+    }
 }
 
 module.exports = {
-  Operation,
-  sum,
-  sub,
-  mul,
-  div,
-  calculateResult,
+    Operation,
+    sum,
+    sub,
+    mul,
+    div,
+    calculateResult,
 };

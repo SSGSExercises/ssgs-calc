@@ -1,14 +1,27 @@
 {
-  "name": "ssgs-calc",
+  "name": "testlab_ssgs",
   "version": "1.0.0",
-  "description": "first ssgs project",
+  "description": "A command-line application for performing basic arithmetic operations, with automated tests and continuous integration, developed by the *Gang of Four + 1* team for the SSGS course.",
   "main": "app.js",
+  "author": "Gang of Four + 1",
   "scripts": {
+    "dev": "node ./src/app.js",
     "test": "jest --coverage"
   },
-  "author": "",
   "license": "ISC",
-  "dependencies": {
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SSGSExercises/ssgs-calc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SSGSExercises/ssgs-calc/issues"
+  },
+  "homepage": "https://github.com/SSGSExercises/ssgs-calc",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "devDependencies": {
     "jest": "^29.7.0"
   }
 }
